@@ -1,0 +1,111 @@
+/**
+    * AnimatedText.module.css
+    * Styles for the AnimatedText component, including text animation and cursor effects.
+    */
+
+.animatedText {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+    padding: 2px 4px;
+    border-radius: var(--radius-sm);
+}
+
+.animatedText:hover {
+    background: rgba(var(--accent-primary-rgb), 0.05);
+}
+
+.animating {
+    color: var(--accent-primary);
+    text-shadow: 0 0 10px rgba(var(--accent-primary-rgb), 0.3);
+}
+
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background: var(--accent-primary);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: cursorBlink 1s infinite;
+    opacity: 0.7;
+}
+
+.animating .cursor {
+    animation: cursorBlinkFast 0.5s infinite;
+}
+
+@keyframes cursorBlink {
+
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 0.1;
+    }
+}
+
+@keyframes cursorBlinkFast {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+}
+
+.glowEffect {
+    position: absolute;
+    inset: -5px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-sm);
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    z-index: -1;
+}
+
+.animating .glowEffect {
+    opacity: 0.3;
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .animatedText,
+    .cursor,
+    .glowEffect {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .animating .glowEffect {
+        opacity: 0.3;
+    }
+
+    .cursor {
+        animation: none;
+        opacity: 0.7;
+    }
+}

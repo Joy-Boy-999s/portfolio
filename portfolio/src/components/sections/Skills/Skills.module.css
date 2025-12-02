@@ -1,0 +1,508 @@
+/**
+    * Skills.module.css
+    * Styles for the Skills section, including skill cards, animations, and interactive effects.
+    */  
+
+.skills {
+    position: relative;
+    min-height: 100vh;
+    padding: var(--space-xl) var(--space-lg);
+    background: var(--primary-bg);
+    overflow: hidden;
+}
+
+.skills.visible {
+    animation: sectionReveal 1s var(--ease-out) forwards;
+}
+
+@keyframes sectionReveal {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Background Pattern */
+.backgroundPattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    z-index: 0;
+}
+
+.patternGrid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--glass-border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(circle at center, black, transparent 70%);
+}
+
+.patternDots {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(var(--accent-primary) 1px, transparent 1px);
+    background-size: 100px 100px;
+    animation: patternFloat 20s linear infinite;
+}
+
+@keyframes patternFloat {
+    from {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    to {
+        transform: translateY(-100px) rotate(1deg);
+    }
+}
+
+/* Container */
+.skillsContainer {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Section Header */
+.sectionHeader {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s var(--ease-out) 0.3s forwards;
+}
+
+.sectionTitle {
+    font-size: var(--text-5xl);
+    margin-bottom: var(--space-sm);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.titleUnderline {
+    width: 100px;
+    height: 4px;
+    background: var(--glass-border);
+    border-radius: var(--radius-full);
+    margin: var(--space-md) auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.underlineFill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-full);
+    animation: underlineGrow 1s var(--ease-out) 0.6s forwards;
+}
+
+@keyframes underlineGrow {
+    to {
+        width: 100%;
+    }
+}
+
+.sectionSubtitle {
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: var(--leading-relaxed);
+}
+
+/* Skills Grid */
+.skillsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.skillCard {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+}
+
+.skillCard.animateIn {
+    animation: cardReveal 0.6s var(--ease-out) calc(var(--animation-delay) + 0.2s) forwards;
+}
+
+@keyframes cardReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.skillCardInner {
+    position: relative;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    transition: all var(--transition-base);
+    overflow: hidden;
+    z-index: 1;
+}
+
+.skillCard:hover .skillCardInner {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-primary);
+}
+
+.skillIconContainer {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto var(--space-md);
+}
+
+.skillIconBackground {
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-md);
+    opacity: 0.1;
+    transform: rotate(45deg);
+    transition: all var(--transition-base);
+}
+
+.skillCard:hover .skillIconBackground {
+    opacity: 0.2;
+    transform: rotate(135deg);
+}
+
+.skillIcon {
+    position: relative;
+    font-size: var(--text-3xl);
+    color: var(--skill-color);
+    z-index: 1;
+    transition: all var(--transition-base);
+}
+
+.skillCard:hover .skillIcon {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 10px var(--skill-color));
+}
+
+.skillIconGlow {
+    position: absolute;
+    inset: -10px;
+    background: var(--skill-color);
+    border-radius: var(--radius-md);
+    filter: blur(20px);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    z-index: 0;
+}
+
+.skillCard:hover .skillIconGlow {
+    opacity: 0.3;
+}
+
+/* Skill Info */
+.skillInfo {
+    text-align: center;
+    margin-top: var(--space-md);
+}
+
+.skillName {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.skillLevel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+}
+
+.levelBar {
+    flex: 1;
+    height: 6px;
+    background: var(--tertiary-bg);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.levelFill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 1.5s var(--ease-out);
+    position: relative;
+}
+
+.levelFill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.levelText {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--skill-color);
+    min-width: 40px;
+    text-align: right;
+}
+
+/* Hover Effect */
+.skillHoverEffect {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.hoverRing {
+    position: absolute;
+    inset: -2px;
+    border: 2px solid var(--skill-color);
+    border-radius: var(--radius-lg);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all var(--transition-base);
+}
+
+.skillCard:hover .hoverRing {
+    opacity: 0.3;
+    transform: scale(1);
+}
+
+.hoverParticles {
+    position: absolute;
+    inset: 0;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--particle-color);
+    border-radius: 50%;
+    opacity: 0;
+    animation: particleFloat 2s var(--ease-out) infinite;
+    animation-delay: calc(var(--particle-index) * 0.1s);
+}
+
+@keyframes particleFloat {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0);
+    }
+
+    10%,
+    90% {
+        opacity: 0.8;
+    }
+
+    50% {
+        transform:
+            translate(calc(cos(var(--particle-index) * 60deg) * 50px),
+                calc(sin(var(--particle-index) * 60deg) * 50px)) scale(1);
+    }
+}
+
+/* Skills Legend */
+.skillsLegend {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-xl);
+    flex-wrap: wrap;
+    padding: var(--space-lg);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s var(--ease-out) 0.8s forwards;
+}
+
+.legendItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.legendIndicator {
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-full);
+}
+
+.legendText {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+}
+
+/* Floating Icons */
+.floatingIcons {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.floatingIcon {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: var(--text-2xl);
+    color: var(--text-muted);
+    opacity: 0.05;
+    animation: floatingIcon 20s linear infinite;
+    animation-delay: var(--float-delay);
+}
+
+@keyframes floatingIcon {
+    0% {
+        transform:
+            translate(calc(var(--x, 10vw) + 0px), calc(var(--y, 10vh) + 0px)) rotate(0deg);
+    }
+
+    25% {
+        transform:
+            translate(calc(var(--x, 10vw) + 20px), calc(var(--y, 10vh) - 30px)) rotate(90deg);
+    }
+
+    50% {
+        transform:
+            translate(calc(var(--x, 10vw) + 0px), calc(var(--y, 10vh) + 0px)) rotate(180deg);
+    }
+
+    75% {
+        transform:
+            translate(calc(var(--x, 10vw) - 20px), calc(var(--y, 10vh) + 30px)) rotate(270deg);
+    }
+
+    100% {
+        transform:
+            translate(calc(var(--x, 10vw) + 0px), calc(var(--y, 10vh) + 0px)) rotate(360deg);
+    }
+}
+
+/* Position each icon */
+.floatingIcon:nth-child(1) {
+    --x: 10vw;
+    --y: 20vh;
+}
+
+.floatingIcon:nth-child(2) {
+    --x: 85vw;
+    --y: 30vh;
+}
+
+.floatingIcon:nth-child(3) {
+    --x: 20vw;
+    --y: 80vh;
+}
+
+.floatingIcon:nth-child(4) {
+    --x: 75vw;
+    --y: 70vh;
+}
+
+.floatingIcon:nth-child(5) {
+    --x: 40vw;
+    --y: 40vh;
+}
+
+.floatingIcon:nth-child(6) {
+    --x: 60vw;
+    --y: 60vh;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .skillsGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
+    }
+
+    .skillsLegend {
+        flex-direction: column;
+        gap: var(--space-sm);
+        align-items: flex-start;
+        padding: var(--space-md);
+    }
+
+    .sectionTitle {
+        font-size: var(--text-4xl);
+    }
+}
+
+@media (max-width: 480px) {
+    .skillsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .sectionTitle {
+        font-size: var(--text-3xl);
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .skills.visible,
+    .skillCard,
+    .skillCardInner,
+    .skillIcon,
+    .skillIconBackground,
+    .levelFill,
+    .hoverRing,
+    .particle,
+    .floatingIcon,
+    .sectionHeader,
+    .skillsLegend,
+    .underlineFill,
+    .patternDots {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .skillCard {
+        opacity: 1;
+        transform: none;
+    }
+
+    .sectionHeader,
+    .skillsLegend {
+        opacity: 1;
+        transform: none;
+    }
+}

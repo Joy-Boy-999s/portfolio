@@ -1,0 +1,1058 @@
+/**
+    * Projects.module.css
+    * Styles for the Projects section, including project cards, filters, and animated background effects.
+    */
+
+.projects {
+    position: relative;
+    min-height: 100vh;
+    padding: var(--space-xl) var(--space-lg);
+    background: var(--primary-bg);
+    overflow: hidden;
+}
+
+/* Animated Background */
+.animatedBackground {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.gridPattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--glass-border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(circle at center, black, transparent 80%);
+    opacity: 0.05;
+    transform: perspective(1000px) rotateX(calc(var(--mouse-y, 0) * 5deg)) rotateY(calc(var(--mouse-x, 0) * 5deg));
+    transition: transform 0.1s linear;
+}
+
+.floatingConnections {
+    position: absolute;
+    inset: 0;
+}
+
+.connectionLine {
+    position: absolute;
+    background: var(--gradient-primary);
+    height: 2px;
+    width: 100px;
+    transform-origin: left center;
+    opacity: 0.1;
+    animation: connectionFloat 20s linear infinite;
+    animation-delay: calc(var(--line-index) * 2s);
+}
+
+@keyframes connectionFloat {
+    0% {
+        transform:
+            translate(calc(var(--start-x, 0vw)), calc(var(--start-y, 0vh))) rotate(calc(var(--rotation, 0deg)));
+        opacity: 0;
+    }
+
+    10%,
+    90% {
+        opacity: 0.1;
+    }
+
+    100% {
+        transform:
+            translate(calc(var(--end-x, 100vw)), calc(var(--end-y, 100vh))) rotate(calc(var(--rotation, 360deg)));
+        opacity: 0;
+    }
+}
+
+/* Set random positions for connection lines */
+.connectionLine:nth-child(1) {
+    --start-x: 10vw;
+    --start-y: 20vh;
+    --end-x: 90vw;
+    --end-y: 80vh;
+    --rotation: 45deg;
+}
+
+.connectionLine:nth-child(2) {
+    --start-x: 90vw;
+    --start-y: 10vh;
+    --end-x: 10vw;
+    --end-y: 90vh;
+    --rotation: -45deg;
+}
+
+.connectionLine:nth-child(3) {
+    --start-x: 50vw;
+    --start-y: 0vh;
+    --end-x: 50vw;
+    --end-y: 100vh;
+    --rotation: 90deg;
+}
+
+.connectionLine:nth-child(4) {
+    --start-x: 0vw;
+    --start-y: 50vh;
+    --end-x: 100vw;
+    --end-y: 50vh;
+    --rotation: 0deg;
+}
+
+.connectionLine:nth-child(5) {
+    --start-x: 20vw;
+    --start-y: 80vh;
+    --end-x: 80vw;
+    --end-y: 20vh;
+    --rotation: -30deg;
+}
+
+.connectionLine:nth-child(6) {
+    --start-x: 80vw;
+    --start-y: 30vh;
+    --end-x: 20vw;
+    --end-y: 70vh;
+    --rotation: 30deg;
+}
+
+.connectionLine:nth-child(7) {
+    --start-x: 30vw;
+    --start-y: 10vh;
+    --end-x: 70vw;
+    --end-y: 90vh;
+    --rotation: 60deg;
+}
+
+.connectionLine:nth-child(8) {
+    --start-x: 70vw;
+    --start-y: 90vh;
+    --end-x: 30vw;
+    --end-y: 10vh;
+    --rotation: -60deg;
+}
+
+.connectionLine:nth-child(9) {
+    --start-x: 40vw;
+    --start-y: 40vh;
+    --end-x: 60vw;
+    --end-y: 60vh;
+    --rotation: 180deg;
+}
+
+.connectionLine:nth-child(10) {
+    --start-x: 60vw;
+    --start-y: 60vh;
+    --end-x: 40vw;
+    --end-y: 40vh;
+    --rotation: -180deg;
+}
+
+/* Container */
+.projectsContainer {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Section Header */
+.sectionHeader {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s var(--ease-out) 0.2s forwards;
+}
+
+.sectionTitle {
+    font-size: var(--text-5xl);
+    margin-bottom: var(--space-sm);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.titleUnderline {
+    width: 100px;
+    height: 4px;
+    background: var(--glass-border);
+    border-radius: var(--radius-full);
+    margin: var(--space-md) auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.underlineFill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-full);
+    animation: underlineGrow 1s var(--ease-out) 0.6s forwards;
+}
+
+@keyframes underlineGrow {
+    to {
+        width: 100%;
+    }
+}
+
+.sectionSubtitle {
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: var(--leading-relaxed);
+}
+
+/* Filter Buttons */
+.filterButtons {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s var(--ease-out) 0.4s forwards;
+}
+
+.filterButton {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    font-family: var(--font-heading);
+    font-weight: var(--font-medium);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.filterButton:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.filterButton.active {
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+    background: rgba(var(--accent-primary-rgb), 0.1);
+}
+
+.filterLabel {
+    font-size: var(--text-sm);
+    white-space: nowrap;
+}
+
+.filterCount {
+    background: var(--glass-bg);
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+}
+
+.filterButton.active .filterCount {
+    background: var(--accent-primary);
+    color: white;
+}
+
+.filterIndicator {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-full);
+    transition: width var(--transition-base);
+}
+
+.filterButton.active .filterIndicator {
+    width: 60%;
+}
+
+/* Projects Grid */
+.projectsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.projectCard {
+    position: relative;
+    height: 400px;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+    animation: cardReveal 0.6s var(--ease-out) calc(var(--card-index) * 0.2s + 0.6s) forwards;
+    isolation: isolate;
+}
+
+@keyframes cardReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.projectCard:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+/* Card Background */
+.cardBackground {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.cardGradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+            rgba(var(--project-color-rgb), 0.2) 0%,
+            rgba(var(--project-color-rgb), 0.1) 50%,
+            transparent 100%);
+    opacity: 0.5;
+    transition: opacity var(--transition-base);
+}
+
+.projectCard:hover .cardGradient {
+    opacity: 0.8;
+}
+
+.cardImage {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+    transition: all var(--transition-base);
+}
+
+.projectCard:hover .cardImage {
+    opacity: 0.5;
+    transform: scale(1.1);
+}
+
+.cardOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            var(--primary-bg) 100%);
+    opacity: 0.8;
+}
+
+/* Card Content */
+.cardContent {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.platformIcon {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin-bottom: var(--space-md);
+}
+
+.iconBackground {
+    position: absolute;
+    inset: 0;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border-radius: var(--radius-lg);
+    transform: rotate(45deg);
+    transition: all var(--transition-base);
+}
+
+.projectCard:hover .iconBackground {
+    transform: rotate(135deg);
+    background: rgba(var(--project-color-rgb), 0.3);
+}
+
+.icon {
+    position: relative;
+    font-size: var(--text-3xl);
+    color: var(--project-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    z-index: 1;
+    transition: all var(--transition-base);
+}
+
+.projectCard:hover .icon {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 10px var(--project-color));
+}
+
+.iconGlow {
+    position: absolute;
+    inset: -10px;
+    background: var(--project-color);
+    border-radius: var(--radius-lg);
+    filter: blur(20px);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    z-index: 0;
+}
+
+.projectCard:hover .iconGlow {
+    opacity: 0.3;
+}
+
+.projectInfo {
+    flex: 1;
+}
+
+.projectTitle {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+    line-height: var(--leading-tight);
+}
+
+.projectDescription {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-lg);
+}
+
+.projectStats {
+    display: flex;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-md);
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.statValue {
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    color: var(--project-color);
+    line-height: 1;
+}
+
+.statLabel {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    margin-top: 4px;
+}
+
+/* Action Button */
+.actionButton {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    color: var(--text-primary);
+    font-weight: var(--font-medium);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    align-self: flex-start;
+    overflow: hidden;
+}
+
+.actionButton:hover {
+    background: rgba(var(--project-color-rgb), 0.2);
+    border-color: var(--project-color);
+    transform: translateX(10px);
+    padding-right: calc(var(--space-lg) + 10px);
+}
+
+.buttonText {
+    font-size: var(--text-sm);
+    transition: transform var(--transition-fast);
+}
+
+.actionButton:hover .buttonText {
+    transform: translateX(-5px);
+}
+
+.actionButton i {
+    font-size: var(--text-lg);
+    transition: transform var(--transition-fast);
+}
+
+.actionButton:hover i {
+    transform: translateX(5px);
+}
+
+.buttonGlow {
+    position: absolute;
+    inset: -5px;
+    background: var(--project-color);
+    border-radius: var(--radius-full);
+    filter: blur(15px);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    z-index: -1;
+}
+
+.actionButton:hover .buttonGlow {
+    opacity: 0.3;
+}
+
+/* Hover Effects */
+.hoverEffects {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.hoverGlow {
+    position: absolute;
+    inset: -20px;
+    background: var(--project-color);
+    border-radius: var(--radius-xl);
+    filter: blur(40px);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.projectCard:hover .hoverGlow {
+    opacity: 0.1;
+}
+
+.hoverParticles {
+    position: absolute;
+    inset: 0;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--project-color);
+    border-radius: 50%;
+    opacity: 0;
+    animation: particleFloat 2s var(--ease-out) infinite;
+    animation-delay: calc(var(--particle-index) * 0.1s);
+}
+
+@keyframes particleFloat {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0);
+    }
+
+    10%,
+    90% {
+        opacity: 0.8;
+    }
+
+    50% {
+        transform:
+            translate(calc(cos(var(--particle-index) * 45deg) * 60px),
+                calc(sin(var(--particle-index) * 45deg) * 60px)) scale(1);
+    }
+}
+
+/* Card Border */
+.cardBorder {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-xl);
+    z-index: 3;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.cardBorder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    background: linear-gradient(135deg,
+            var(--project-color),
+            transparent,
+            var(--project-color));
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.projectCard:hover .cardBorder::before {
+    opacity: 1;
+}
+
+.borderTop,
+.borderRight,
+.borderBottom,
+.borderLeft {
+    position: absolute;
+    background: var(--project-color);
+    opacity: 0;
+    transition: all var(--transition-base);
+}
+
+.borderTop {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.borderRight {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 2px;
+    transform: scaleY(0);
+    transform-origin: top;
+}
+
+.borderBottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: right;
+}
+
+.borderLeft {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 2px;
+    transform: scaleY(0);
+    transform-origin: bottom;
+}
+
+.projectCard:hover .borderTop {
+    transform: scaleX(1);
+    opacity: 1;
+    transition-delay: 0s;
+}
+
+.projectCard:hover .borderRight {
+    transform: scaleY(1);
+    opacity: 1;
+    transition-delay: 0.1s;
+}
+
+.projectCard:hover .borderBottom {
+    transform: scaleX(1);
+    opacity: 1;
+    transition-delay: 0.2s;
+}
+
+.projectCard:hover .borderLeft {
+    transform: scaleY(1);
+    opacity: 1;
+    transition-delay: 0.3s;
+}
+
+/* View All Button */
+.viewAllContainer {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s var(--ease-out) 1.2s forwards;
+}
+
+.viewAllButton {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-xl);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+    font-weight: var(--font-medium);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.viewAllButton:hover {
+    background: rgba(var(--accent-primary-rgb), 0.1);
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    padding-right: calc(var(--space-xl) + 20px);
+}
+
+.viewAllText {
+    font-size: var(--text-base);
+    transition: transform var(--transition-base);
+}
+
+.viewAllButton:hover .viewAllText {
+    transform: translateX(-10px);
+}
+
+.viewAllIcon {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    transition: transform var(--transition-base);
+}
+
+.viewAllButton:hover .viewAllIcon {
+    transform: translateX(10px);
+}
+
+.viewAllIcon i {
+    font-size: var(--text-lg);
+    transition: transform var(--transition-base);
+}
+
+.viewAllIcon i:first-child {
+    transition-delay: 0s;
+}
+
+.viewAllIcon i:last-child {
+    transition-delay: 0.1s;
+}
+
+.viewAllButton:hover .viewAllIcon i:first-child {
+    transform: translateX(5px);
+}
+
+.viewAllButton:hover .viewAllIcon i:last-child {
+    transform: translateX(10px);
+}
+
+.viewAllGlow {
+    position: absolute;
+    inset: -10px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-full);
+    filter: blur(20px);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    z-index: -1;
+}
+
+.viewAllButton:hover .viewAllGlow {
+    opacity: 0.3;
+}
+
+/* Social Stats */
+.socialStats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s var(--ease-out) 1.4s forwards;
+}
+
+.statCard {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    transition: all var(--transition-base);
+}
+
+.statCard:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-primary);
+}
+
+.statIcon {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-2xl);
+    color: white;
+}
+
+.statContent {
+    flex: 1;
+}
+
+.statNumber {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.statLabel {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-top: var(--space-xs);
+}
+
+/* Floating Social Icons */
+.floatingSocialIcons {
+    position: absolute;
+    bottom: var(--space-xl);
+    right: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    z-index: 2;
+}
+
+.floatingIcon {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-2xl);
+    color: var(--icon-color);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    animation: iconFloat 6s ease-in-out infinite;
+    animation-delay: calc(var(--icon-index, 0) * 1s);
+}
+
+@keyframes iconFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.floatingIcon:hover {
+    background: rgba(var(--icon-color-rgb), 0.2);
+    border-color: var(--icon-color);
+    transform: scale(1.2) rotate(15deg);
+    box-shadow: 0 0 20px rgba(var(--icon-color-rgb), 0.3);
+}
+
+.iconTooltip {
+    position: absolute;
+    right: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all var(--transition-base);
+}
+
+.floatingIcon:hover .iconTooltip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(-5px);
+}
+
+/* Position each icon */
+.floatingIcon:nth-child(1) {
+    --icon-index: 0;
+}
+
+.floatingIcon:nth-child(2) {
+    --icon-index: 1;
+}
+
+.floatingIcon:nth-child(3) {
+    --icon-index: 2;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .projectsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .floatingSocialIcons {
+        bottom: var(--space-lg);
+        right: var(--space-lg);
+    }
+}
+
+@media (max-width: 768px) {
+    .projectsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .projectCard {
+        height: 350px;
+    }
+
+    .socialStats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .floatingSocialIcons {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: var(--space-xl);
+    }
+}
+
+@media (max-width: 480px) {
+    .sectionTitle {
+        font-size: var(--text-4xl);
+    }
+
+    .projectCard {
+        height: 300px;
+    }
+
+    .projectTitle {
+        font-size: var(--text-xl);
+    }
+
+    .socialStats {
+        grid-template-columns: 1fr;
+    }
+
+    .filterButtons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filterButton {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .sectionHeader,
+    .filterButtons,
+    .projectCard,
+    .viewAllContainer,
+    .socialStats,
+    .floatingIcon,
+    .gridPattern,
+    .connectionLine,
+    .underlineFill,
+    .iconBackground,
+    .icon,
+    .actionButton,
+    .hoverGlow,
+    .particle,
+    .cardBorder::before,
+    .borderTop,
+    .borderRight,
+    .borderBottom,
+    .borderLeft,
+    .viewAllButton,
+    .statCard {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .sectionHeader,
+    .filterButtons,
+    .projectCard,
+    .viewAllContainer,
+    .socialStats {
+        opacity: 1;
+        transform: none;
+    }
+
+    .projectCard {
+        animation-delay: 0s !important;
+    }
+
+    .gridPattern {
+        transform: none;
+    }
+
+    .projectCard:hover {
+        transform: none;
+    }
+
+    .projectCard:hover .cardImage {
+        transform: none;
+    }
+
+    .projectCard:hover .iconBackground {
+        transform: none;
+    }
+
+    .actionButton:hover {
+        transform: none;
+        padding-right: var(--space-xl);
+    }
+
+    .floatingIcon:hover {
+        transform: none;
+    }
+}

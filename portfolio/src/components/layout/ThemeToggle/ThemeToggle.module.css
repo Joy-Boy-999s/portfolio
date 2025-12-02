@@ -1,0 +1,344 @@
+/**
+    * ThemeToggle.module.css
+    * Styles for the ThemeToggle component, enabling users to switch between light and dark themes with animated effects.
+    */
+
+.themeToggle {
+    position: relative;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    outline: none;
+    transition: all var(--transition-fast);
+    z-index: 1;
+}
+
+.themeToggle:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-full);
+}
+
+.toggleContainer {
+    position: relative;
+    width: 60px;
+    height: 32px;
+    perspective: 100px;
+}
+
+.toggleTrack {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    transition: all var(--transition-base);
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.1),
+        0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.themeToggle:hover .toggleTrack {
+    background: rgba(var(--accent-primary-rgb), 0.1);
+    border-color: var(--accent-primary);
+    transform: scale(1.05);
+}
+
+.themeToggle.animating .toggleTrack {
+    animation: toggleBounce 0.6s var(--ease-bounce);
+}
+
+@keyframes toggleBounce {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.1);
+    }
+
+    50% {
+        transform: scale(0.95);
+    }
+
+    70% {
+        transform: scale(1.05);
+    }
+}
+
+.iconContainer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    pointer-events: none;
+}
+
+.icon {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    transition: all var(--transition-base);
+    opacity: 0.8;
+}
+
+/* Sun Icon */
+.sun {
+    transform: scale(0.9);
+}
+
+.sunCore {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: var(--accent-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-gold);
+}
+
+.sunRay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 6px;
+    background: var(--accent-gold);
+    border-radius: var(--radius-full);
+    transform-origin: center 12px;
+    transform:
+        translate(-50%, -50%) rotate(calc(var(--ray-index) * 45deg)) translateY(-10px);
+    opacity: 0.8;
+}
+
+/* Moon Icon */
+.moon {
+    transform: scale(0.9) rotate(-15deg);
+}
+
+.moonBody {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow:
+        inset -3px -3px 0 rgba(255, 255, 255, 0.1),
+        0 0 8px var(--accent-primary);
+}
+
+.moonCrater {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+.moonCrater:nth-child(2) {
+    width: 4px;
+    height: 4px;
+    top: 25%;
+    left: 60%;
+}
+
+.moonCrater:nth-child(3) {
+    width: 3px;
+    height: 3px;
+    top: 60%;
+    left: 30%;
+}
+
+.moonCrater:nth-child(4) {
+    width: 2px;
+    height: 2px;
+    top: 40%;
+    left: 40%;
+}
+
+/* Toggle Switch */
+.toggleSwitch {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 28px;
+    height: 28px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    transition: all var(--transition-base);
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.themeToggle[data-theme="dark"] .toggleSwitch {
+    left: calc(100% - 30px);
+    background: var(--gradient-secondary);
+}
+
+.switchKnob {
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    opacity: 0.9;
+}
+
+/* Glow Effect */
+.glowEffect {
+    position: absolute;
+    inset: -8px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-full);
+    opacity: 0;
+    filter: blur(12px);
+    z-index: 0;
+    transition: opacity var(--transition-base);
+    pointer-events: none;
+}
+
+.themeToggle:hover .glowEffect {
+    opacity: 0.3;
+}
+
+.themeToggle.animating .glowEffect {
+    opacity: 0.5;
+    animation: glowPulse 0.6s var(--ease-bounce);
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.2);
+    }
+}
+
+/* Theme-based adjustments */
+.themeToggle[data-theme="dark"] .sun {
+    opacity: 0.5;
+    transform: scale(0.8);
+}
+
+.themeToggle[data-theme="dark"] .moon {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+.themeToggle[data-theme="light"] .sun {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.themeToggle[data-theme="light"] .moon {
+    opacity: 0.5;
+    transform: scale(0.8) rotate(-15deg);
+}
+
+/* Hover animations */
+.themeToggle:hover .sun {
+    animation: sunSpin 2s linear infinite;
+}
+
+.themeToggle:hover .moon {
+    animation: moonFloat 2s var(--ease-in-out) infinite;
+}
+
+@keyframes sunSpin {
+    from {
+        transform: rotate(0deg) scale(1);
+    }
+
+    to {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+@keyframes moonFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-2px) rotate(5deg);
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .themeToggle,
+    .toggleTrack,
+    .toggleSwitch,
+    .icon,
+    .glowEffect {
+        transition: none;
+        animation: none;
+    }
+
+    .themeToggle:hover .sun,
+    .themeToggle:hover .moon {
+        animation: none;
+    }
+
+    .themeToggle.animating .toggleTrack,
+    .themeToggle.animating .glowEffect {
+        animation: none;
+    }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .themeToggle {
+        padding: 0.25rem;
+    }
+
+    .toggleContainer {
+        width: 50px;
+        height: 28px;
+    }
+
+    .toggleSwitch {
+        width: 24px;
+        height: 24px;
+    }
+
+    .themeToggle[data-theme="dark"] .toggleSwitch {
+        left: calc(100% - 26px);
+    }
+}
+
+/* Accessibility focus styles */
+.themeToggle:focus {
+    outline: none;
+}
+
+.themeToggle:focus-visible .toggleTrack {
+    box-shadow:
+        0 0 0 3px rgba(var(--accent-primary-rgb), 0.3),
+        inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}

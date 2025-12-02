@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
-import Header from '../components/layout/Header'
-import BackgroundEffects from '../components/layout/BackgroundEffects'
-import Cursor from '../components/layout/Cursor'
-import Hero from '../components/sections/Hero'
-import Skills from '../components/sections/Skills'
-import Achievements from '../components/sections/Achievements'
-import Projects from '../components/sections/Projects'
-import Contact from '../components/sections/Contact'
+
 import ScrollToTop from '../components/common/ScrollToTop'
 import ContextMenu from '../components/ui/ContextMenu'
+import BackgroundEffects from '@/components/layout/BackgroundEffects/BackgroundEffects'
+import Cursor from '@/components/layout/Cursor'
+import Achievements from '@/components/sections/Achievements/Achievements'
+import Hero from '@/components/sections/Hero/Hero'
+import Projects from '@/components/sections/Projects/Projects'
+import Skills from '@/components/sections/Skills/Skills'
+import Header from '@/components/layout/Header/Header'
+import Contact from '@/components/sections/Contact/Contact'
 
 export default function Home() {
   const [titlePosition, setTitlePosition] = useState(0)
@@ -32,6 +33,7 @@ export default function Home() {
     const titleScroll = setInterval(scrollTitle, 270)
     return () => clearInterval(titleScroll)
   }, [titlePosition, isClient])
+
 
   return (
     <>
