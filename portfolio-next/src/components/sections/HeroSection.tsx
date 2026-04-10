@@ -80,47 +80,51 @@ export default function HeroSection() {
       <div className="flex-1 w-full hidden lg:flex items-center justify-center z-10 relative h-[500px]" style={{ perspective: "1500px" }}>
 
         {/* Subtle glow behind the box */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-gradient-to-r from-emerald-500 to-purple-500 rounded-full blur-[80px] opacity-20" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-to-tr from-emerald-500 to-purple-500 rounded-full blur-[100px] opacity-20 pointer-events-none" />
 
         <motion.div
           animate={{
             rotateX: rotX,
             rotateY: rotY,
           }}
-          transition={{ type: "spring", stiffness: 100, damping: 30, mass: 0.5 }}
-          className="relative w-full max-w-[450px]"
+          transition={{ type: "spring", stiffness: 70, damping: 30, mass: 0.5 }}
+          className="relative w-full max-w-[500px]"
           style={{ transformStyle: "preserve-3d" }}
         >
-          {/* Neon Border equivalent via rotating pseudo-element if preferred, but a nice static colorful border is incredibly performant and modern. We'll use a multi-stop gradient border block instead of the heavy DOM iteration. */}
-          <div className="absolute inset-[-4px] bg-gradient-to-r from-emerald-400 via-sky-400 to-fuchsia-500 rounded-2xl opacity-70 blur-[8px]" />
-          <div className="absolute inset-[-2px] bg-gradient-to-r from-emerald-400 via-sky-400 to-fuchsia-500 rounded-2xl" />
+          {/* Enhanced Neon Animated Border */}
+          <div className="absolute inset-[-1px] rounded-[16px] overflow-hidden shadow-[0_0_40px_rgba(255,0,221,0.3)]">
+            <motion.div 
+              className="absolute top-1/2 left-1/2 w-[200%] h-[200%] -translate-x-1/2 -translate-y-1/2 origin-center"
+              style={{
+                background: "conic-gradient(from 0deg, transparent 0%, #00ffcc 25%, #ff00cc 50%, transparent 50%, transparent 100%)"
+              }}
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+            />
+          </div>
 
-          <GlassBox className="relative w-full h-[350px] p-6 font-jetbrains text-sm bg-neutral-900/90 shadow-2xl flex flex-col justify-center">
-            <p className="text-gray-500 mb-2"><span className="mr-4">1</span><span className="text-emerald-500"># About me</span></p>
-            <p className="mb-1"><span className="text-gray-500 mr-4">2</span><span className="text-sky-400">name</span> <span className="text-white">=</span> <span className="text-orange-400">"B.Neeraj Kumar"</span></p>
-            <p className="mb-1"><span className="text-gray-500 mr-4">3</span><span className="text-sky-400">job</span> <span className="text-white">=</span> <span className="text-orange-400">"Aspiring Software Developer"</span></p>
-            <p className="mb-1"><span className="text-gray-500 mr-4">4</span><span className="text-sky-400">hobby</span> <span className="text-white">=</span> <span className="text-orange-400">"Turning creative ideas </span></p>
-            <p className="mb-1"><span className="text-gray-500 mr-4"> </span><span className="text-orange-400">           into reality through code"</span></p>
-            <p className="mb-4"><span className="text-gray-500 mr-4">5</span><span className="text-sky-400">fav_lang</span> <span className="text-white">=</span> <span className="text-orange-400">"Python"</span></p>
+          {/* The Glass Background Plane */}
+          <div className="absolute inset-[1px] bg-neutral-950/90 backdrop-blur-2xl rounded-[15px]" style={{ transform: "translateZ(0px)" }} />
 
-            <p className="mb-1 line-clamp-3">
-              <span className="text-gray-500 mr-4">6</span>
-              <span className="text-yellow-200">print</span>
-              <span className="text-yellow-400">(</span>
-              <span className="text-blue-600">f</span>
-              <span className="text-orange-400">"Hi there! I'm </span>
-              <span className="text-pink-500">{'{'}</span><span className="text-sky-400">name</span><span className="text-pink-500">{'}'}</span>
-              <span className="text-orange-400">. I'm an </span>
-              <span className="text-pink-500">{'{'}</span><span className="text-sky-400">job</span><span className="text-pink-500">{'}'}</span>
-              <span className="text-orange-400"> who enjoys </span>
-              <span className="text-pink-500">{'{'}</span><span className="text-sky-400">hobby</span><span className="text-pink-500">{'}'}</span>
-              <span className="text-orange-400"> as a hobby with my favourite language </span>
-              <span className="text-pink-500">{'{'}</span><span className="text-sky-400">fav_lang</span><span className="text-pink-500">{'}'}</span>
-              <span className="text-orange-400">"</span>
-              <span className="text-yellow-400">)</span>
-            </p>
-            <p className="mt-2"><span className="text-gray-500 mr-4">7</span><span className="text-white animate-pulse">|</span></p>
-          </GlassBox>
+          {/* Code Text Plane floating above the glass */}
+          <div 
+            className="relative w-full p-8 font-jetbrains text-[15px] leading-relaxed flex flex-col justify-center"
+            style={{ transform: "translateZ(40px)" }} 
+          >
+            <p><b className="text-gray-500 font-bold inline-block w-8 text-right select-none mr-4"> 1</b> <span className="text-emerald-500"># About me</span></p>
+            <p><b className="text-gray-500 font-bold inline-block w-8 text-right select-none mr-4"> 2</b> <span className="text-sky-400">name</span> <span className="text-white">=</span> <span className="text-orange-400">"B.Neeraj Kumar"</span></p>
+            <p><b className="text-gray-500 font-bold inline-block w-8 text-right select-none mr-4"> 3</b> <span className="text-sky-400">job</span> <span className="text-white">=</span> <span className="text-orange-400">"Aspiring Software Developer"</span></p>
+            <p><b className="text-gray-500 font-bold inline-block w-8 text-right select-none mr-4"> 4</b> <span className="text-sky-400">hobby</span> <span className="text-white">=</span> <span className="text-orange-400">"Turning creative ideas </span></p>
+            <p><b className="text-gray-500 font-bold inline-block w-8 text-right select-none mr-4"> 5</b> <span className="text-orange-400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;into reality through code"</span></p>
+            <p><b className="text-gray-500 font-bold inline-block w-8 text-right select-none mr-4"> 6</b> <span className="text-sky-400">fav_lang</span> <span className="text-white">=</span> <span className="text-orange-400">"Python"</span></p>
+            <p><b className="text-gray-500 font-bold inline-block w-8 text-right select-none mr-4"> 7</b> </p>
+            <p className="whitespace-pre-wrap"><b className="text-gray-500 font-bold inline-block w-8 text-right select-none mr-4"> 8</b> <span className="text-yellow-300">print</span><span className="text-yellow-400">(</span><span className="text-blue-600">f</span><span className="text-orange-400">"Hi there! I'm </span><span className="text-pink-500">{'{'}</span><span className="text-sky-400">name</span><span className="text-pink-500">{'}'}</span><span className="text-orange-400">. I'm an </span></p>
+            <p className="whitespace-pre-wrap"><b className="text-gray-500 font-bold inline-block w-8 text-right select-none mr-4"> 9</b> <span className="text-pink-500">{'{'}</span><span className="text-sky-400">job</span><span className="text-pink-500">{'}'}</span><span className="text-orange-400"> who enjoys </span><span className="text-pink-500">{'{'}</span><span className="text-sky-400">hobby</span><span className="text-pink-500">{'}'} </span><span className="text-orange-400">as a hobby</span></p>
+            <p className="whitespace-pre-wrap"><b className="text-gray-500 font-bold inline-block w-8 text-right select-none mr-4">10</b> <span className="text-orange-400">with my favourite language</span></p>
+            <p><b className="text-gray-500 font-bold inline-block w-8 text-right select-none mr-4">11</b> <span className="text-pink-500">{'{'}</span><span className="text-sky-400">fav_lang</span><span className="text-pink-500">{'}'}</span><span className="text-orange-400">"</span><span className="text-yellow-400">)</span></p>
+            <p><b className="text-gray-500 font-bold inline-block w-8 text-right select-none mr-4">12</b> </p>
+            <p><b className="text-emerald-500 font-bold inline-block w-8 text-right select-none mr-4">13</b> <b className="text-white animate-pulse">|</b></p>
+          </div>
         </motion.div>
       </div>
     </section>
