@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import BackgroundGrid from "@/components/layout/BackgroundGrid";
 import CustomCursor from "@/components/layout/CustomCursor";
+import DynamicTitle from "@/components/layout/DynamicTitle";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${outfit.variable} ${jetbrains.variable} font-sans bg-background text-foreground antialiased min-h-screen`}
       >
+        <DynamicTitle />
         <BackgroundGrid />
         <CustomCursor />
         <Header />

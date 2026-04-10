@@ -103,3 +103,35 @@
     text-shadow: -0.025em 0 0 rgba(236, 72, 153, 0.75), -0.025em -0.025em 0 rgba(16, 185, 129, 0.75), -0.025em -0.05em 0 rgba(14, 165, 233, 0.75);
   }
 }
+
+@keyframes indicator {
+  0%, 10%, 100% {
+    width: 0;
+  }
+  70%, 90% {
+    width: 100%;
+  }
+}
+
+.hero-word {
+  position: relative;
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.1);
+}
+
+.hero-word::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(70deg, #ffe100, #ff00dd);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 4px solid #ef4444; 
+  filter: drop-shadow(0 0 20px rgba(255, 0, 221, 0.6)) drop-shadow(0 0 25px rgba(255, 225, 0, 0.6));
+  animation: indicator 3s linear infinite;
+}
