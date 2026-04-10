@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #04040a;
+  --color-foreground: #ffffff;
+}
+
+@layer base {
+  :root {
+    --color-js: #eab308;
+    --color-py: #f97316;
+    --color-web: #a855f7;
+    --color-c: #ffffff;
+    --color-java: #3b82f6;
+    --color-auto: #d946ef;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-[var(--color-background)] text-[var(--color-foreground)] overflow-x-hidden;
+    cursor: default;
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  html {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+@layer utilities {
+  .text-fill-transparent {
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .glassbox {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .glitch-text {
+    position: relative;
+    text-shadow: 
+      0.05em 0 0 rgba(236, 72, 153, 0.75), /* pink-500 */
+      -0.05em -0.025em 0 rgba(16, 185, 129, 0.75), /* emerald-500 */
+      -0.025em 0.05em 0 rgba(14, 165, 233, 0.75); /* sky-500 */
+    animation: glitch 500ms infinite;
+  }
+
+  .glitch-text span {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+  .glitch-text span:first-child {
+    animation: glitch 650ms infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    transform: translate(-0.025em, -0.0125em);
+    opacity: 0.8;
+  }
+
+  .glitch-text span:last-child {
+    animation: glitch 375ms infinite;
+    clip-path: polygon(0 80%, 100% 20%, 100% 100%, 0 100%);
+    transform: translate(0.0125em, 0.025em);
+    opacity: 0.8;
+  }
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: 0.05em 0 0 rgba(236, 72, 153, 0.75), -0.05em -0.025em 0 rgba(16, 185, 129, 0.75), -0.025em 0.05em 0 rgba(14, 165, 233, 0.75);
+  }
+  14% {
+    text-shadow: 0.05em 0 0 rgba(236, 72, 153, 0.75), -0.05em -0.025em 0 rgba(16, 185, 129, 0.75), -0.025em 0.05em 0 rgba(14, 165, 233, 0.75);
+  }
+  15% {
+    text-shadow: -0.05em -0.025em 0 rgba(236, 72, 153, 0.75), 0.025em 0.025em 0 rgba(16, 185, 129, 0.75), -0.05em -0.05em 0 rgba(14, 165, 233, 0.75);
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 rgba(236, 72, 153, 0.75), 0.025em 0.025em 0 rgba(16, 185, 129, 0.75), -0.05em -0.05em 0 rgba(14, 165, 233, 0.75);
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 rgba(236, 72, 153, 0.75), 0.05em 0 0 rgba(16, 185, 129, 0.75), 0 -0.05em 0 rgba(14, 165, 233, 0.75);
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 rgba(236, 72, 153, 0.75), 0.05em 0 0 rgba(16, 185, 129, 0.75), 0 -0.05em 0 rgba(14, 165, 233, 0.75);
+  }
+  100% {
+    text-shadow: -0.025em 0 0 rgba(236, 72, 153, 0.75), -0.025em -0.025em 0 rgba(16, 185, 129, 0.75), -0.025em -0.05em 0 rgba(14, 165, 233, 0.75);
+  }
+}
