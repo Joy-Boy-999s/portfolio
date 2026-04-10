@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useMousePosition } from "@/hooks/useMousePosition";
 import GlassBox from "../ui/GlassBox";
+import ScrambleText from "../ui/ScrambleText";
 
 export default function HeroSection() {
   const mousePosition = useMousePosition();
@@ -22,33 +23,38 @@ export default function HeroSection() {
 
   // Words for bulletproof exact typing sync
   const words = ["Coder..", "Editor..", "Creator.."];
-  const [currentWord, setCurrentWord] = useState(0);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
   useEffect(() => {
+    // Cycles the underlying word exactly in sync with the 3s CSS animation duration.
+    // The "key={currentWordIndex}" completely forces a fresh unmount/remount, 
+    // ensuring the animation restarts perfectly with zero ghost duplications!
     const interval = setInterval(() => {
-      setCurrentWord((prev) => (prev + 1) % words.length);
+      setCurrentWordIndex((prev) => (prev + 1) % words.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [words.length]);
 
   return (
     <section id="Home" className="min-h-screen flex flex-col lg:flex-row items-center justify-center pt-20 relatve overflow-hidden">
 
       {/* Left Text Side */}
-      <div className="flex-1 w-full space-y-8 z-10">
+      <div className="flex-1 w-full space-y-8 z-10 pl-8 lg:pl-16 xl:pl-32">
         <div>
           <h1 className="text-3xl md:text-6xl font-bold font-outfit text-white" id="names">
             I'm a&nbsp;
-            <span key={currentWord} className="hero-word" data-text={words[currentWord]}>
-              {words[currentWord]}
+            <span key={currentWordIndex} className="hero-word" data-text={words[currentWordIndex]}>
+              {words[currentWordIndex]}
             </span>
           </h1>
         </div>
 
         <div className="space-y-4">
-          <h2 className="text-2xl md:text-3xl text-emerald-400 font-code transition-colors hover:text-white hover:bg-white/10 px-2 py-1 rounded inline-block cursor-default">
-            Great Landing , Welcome !
-          </h2>
+          <ScrambleText 
+            initialText="Great Landing , Welcome !" 
+            targetText="Welcome to my portfolio !" 
+            className="text-2xl md:text-3xl text-emerald-400 font-code transition-colors hover:text-white hover:bg-white/10 px-2 py-1 rounded inline-block cursor-default"
+          />
           <p className="text-gray-400 text-lg md:text-xl font-inter max-w-md">
             Greetings, tech enthusiasts! I'm B.Neeraj Kumar.
           </p>
