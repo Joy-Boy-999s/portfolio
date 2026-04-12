@@ -12,8 +12,8 @@ const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrai
 
 export const metadata: Metadata = {
   title: "B.Neeraj Kumar | Portfolio",
-  description: "Hi there, I'm B.Neeraj Kumar. Aspiring Software Developer, Coder, and Creator.",
-  keywords: ["B.Neeraj Kumar", "Portfolio", "Software Developer", "Coder", "React", "Next.js"],
+  description: "Hi there, I'm B.Neeraj Kumar. Full Stack Developer specializing in React.js, NestJS, Spring Boot, and Node.js.",
+  keywords: ["B.Neeraj Kumar", "Portfolio", "Full Stack Developer", "SDE", "React", "NestJS", "Spring Boot", "Node.js", "Next.js"],
 };
 
 export default function RootLayout({
