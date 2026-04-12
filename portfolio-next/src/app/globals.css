@@ -13,6 +13,8 @@
     --color-c: #ffffff;
     --color-java: #3b82f6;
     --color-auto: #d946ef;
+    --color-ts: #3178c6;
+    --color-node: #68a063;
   }
 
   html {
@@ -150,4 +152,32 @@
   border-right: 4px solid #ef4444;
   filter: drop-shadow(0 0 20px rgba(255, 0, 221, 0.6)) drop-shadow(0 0 25px rgba(255, 225, 0, 0.6));
   animation: indicator 3s linear infinite;
+}
+
+/* Skill ring effects */
+.skill-ring-card {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+}
+
+.skill-ring-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.skill-glow-pulse {
+  animation: glowPulse 2.5s ease-in-out infinite;
+}
+
+.skill-ring-spin {
+  animation: ringSpin 4s linear infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.15; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(1.05); }
+}
+
+@keyframes ringSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
