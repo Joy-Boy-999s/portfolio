@@ -41,6 +41,18 @@
   }
 }
 
+@keyframes cursorGlow {
+  0% {
+    filter: hue-rotate(0deg) blur(60px);
+  }
+  50% {
+    filter: hue-rotate(180deg) blur(110px);
+  }
+  100% {
+    filter: hue-rotate(360deg) blur(60px);
+  }
+}
+
 @layer utilities {
   .text-fill-transparent {
     -webkit-text-fill-color: transparent;

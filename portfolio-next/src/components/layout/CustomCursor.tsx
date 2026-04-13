@@ -1,34 +1,50 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    const el = ref.current;
+    if (!el) return;
+
+    let rafId = 0;
+    let nextX = window.innerWidth / 2;
+    let nextY = window.innerHeight / 2;
+
+    const onMove = (e: MouseEvent) => {
+      nextX = e.clientX;
+      nextY = e.clientY;
+      if (!rafId) {
+        rafId = requestAnimationFrame(flush);
+      }
     };
 
-    window.addEventListener("mousemove", updateMousePosition);
+    const flush = () => {
+      rafId = 0;
+      el.style.setProperty("--cursor-x", `${nextX}px`);
+      el.style.setProperty("--cursor-y", `${nextY}px`);
+    };
 
+    window.addEventListener("mousemove", onMove, { passive: true });
     return () => {
-      window.removeEventListener("mousemove", updateMousePosition);
+      window.removeEventListener("mousemove", onMove);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 w-[200px] h-[200px] rounded-full pointer-events-none z-[-5]"
-      animate={{
-        x: mousePosition.x - 100, // offset by half the width/height
-        y: mousePosition.y - 100,
-      }}
-      transition={{ type: "tween", ease: "backOut", duration: 0.15 }}
+    <div
+      ref={ref}
+      aria-hidden
+      className="fixed top-0 left-0 w-[260px] h-[260px] rounded-full pointer-events-none hidden sm:block z-[-10]"
       style={{
-        background: "radial-gradient(circle, rgba(16,185,129,0.15) 0%, rgba(14,165,233,0) 70%)",
-        filter: "blur(20px)",
+        backgroundColor: "#00ff88",
+        transform:
+          "translate3d(calc(var(--cursor-x, 50vw) - 50%), calc(var(--cursor-y, 50vh) - 50%), 0)",
+        animation: "cursorGlow 4s linear infinite",
+        willChange: "transform, filter",
       }}
     />
   );

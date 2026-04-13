@@ -87,13 +87,19 @@ export default function HeroSection() {
               className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold font-outfit text-white leading-tight"
               id="names"
             >
-              I&apos;m a&nbsp;
-              <span
-                key={currentWordIndex}
-                className="hero-word"
-                data-text={words[currentWordIndex]}
-              >
-                {words[currentWordIndex]}
+              <span className="sr-only">
+                B. Neeraj Kumar (JoyBoy / Joy-Boy-999) — Full Stack Developer
+                from India.{" "}
+              </span>
+              <span aria-hidden="true">
+                I&apos;m a&nbsp;
+                <span
+                  key={currentWordIndex}
+                  className="hero-word"
+                  data-text={words[currentWordIndex]}
+                >
+                  {words[currentWordIndex]}
+                </span>
               </span>
             </h1>
           </motion.div>
