@@ -2,6 +2,10 @@
 
 import { useEffect, useRef } from "react";
 
+const SIZE = 260;
+const HALF = SIZE / 2;
+const EASE = 0.18;
+
 export default function CustomCursor() {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -9,22 +13,39 @@ export default function CustomCursor() {
     const el = ref.current;
     if (!el) return;
 
+    const root = document.documentElement;
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let currentX = targetX;
+    let currentY = targetY;
     let rafId = 0;
-    let nextX = window.innerWidth / 2;
-    let nextY = window.innerHeight / 2;
+    let running = false;
 
-    const onMove = (e: MouseEvent) => {
-      nextX = e.clientX;
-      nextY = e.clientY;
-      if (!rafId) {
-        rafId = requestAnimationFrame(flush);
+    const tick = () => {
+      currentX += (targetX - currentX) * EASE;
+      currentY += (targetY - currentY) * EASE;
+
+      el.style.transform = `translate3d(${currentX - HALF}px, ${currentY - HALF}px, 0)`;
+      root.style.setProperty("--cursor-x", `${currentX}px`);
+      root.style.setProperty("--cursor-y", `${currentY}px`);
+
+      if (
+        Math.abs(targetX - currentX) > 0.1 ||
+        Math.abs(targetY - currentY) > 0.1
+      ) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        running = false;
       }
     };
 
-    const flush = () => {
-      rafId = 0;
-      el.style.setProperty("--cursor-x", `${nextX}px`);
-      el.style.setProperty("--cursor-y", `${nextY}px`);
+    const onMove = (e: MouseEvent) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      if (!running) {
+        running = true;
+        rafId = requestAnimationFrame(tick);
+      }
     };
 
     window.addEventListener("mousemove", onMove, { passive: true });
@@ -38,11 +59,11 @@ export default function CustomCursor() {
     <div
       ref={ref}
       aria-hidden
-      className="fixed top-0 left-0 w-[260px] h-[260px] rounded-full pointer-events-none hidden sm:block z-[-10]"
+      className="fixed top-0 left-0 rounded-full pointer-events-none hidden sm:block z-[-10]"
       style={{
+        width: SIZE,
+        height: SIZE,
         backgroundColor: "#00ff88",
-        transform:
-          "translate3d(calc(var(--cursor-x, 50vw) - 50%), calc(var(--cursor-y, 50vh) - 50%), 0)",
         animation: "cursorGlow 4s linear infinite",
         willChange: "transform, filter",
       }}
